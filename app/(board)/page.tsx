@@ -2,7 +2,7 @@ import Feed from "@/components/Feed";
 import FeedSwitch from "@/components/FeedSwitch";
 import Share from "@/components/Share";
 
-export default function Home() {
+export default async function Home() {
   return (
     <div>
       <FeedSwitch />
