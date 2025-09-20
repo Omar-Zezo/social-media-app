@@ -28,7 +28,7 @@ const PopularTags = () => {
       <div className="">
         <div className="flex items-center justify-between">
           <span className="text-textGray text-sm">Technology • Trending</span>
-          <Image src="icons/infoMore.svg" alt="info" width={16} height={16} />
+          <Image src="/icons/infoMore.svg" alt="info" width={16} height={16} />
         </div>
         <h2 className="text-textGrayLight font-bold">OpenAI</h2>
         <span className="text-textGray text-sm">20K posts</span>
@@ -37,7 +37,7 @@ const PopularTags = () => {
       <div className="">
         <div className="flex items-center justify-between">
           <span className="text-textGray text-sm">Technology • Trending</span>
-          <Image src="icons/infoMore.svg" alt="info" width={16} height={16} />
+          <Image src="/icons/infoMore.svg" alt="info" width={16} height={16} />
         </div>
         <h2 className="text-textGrayLight font-bold">OpenAI</h2>
         <span className="text-textGray text-sm">20K posts</span>
@@ -46,7 +46,7 @@ const PopularTags = () => {
       <div className="">
         <div className="flex items-center justify-between">
           <span className="text-textGray text-sm">Technology • Trending</span>
-          <Image src="icons/infoMore.svg" alt="info" width={16} height={16} />
+          <Image src="/icons/infoMore.svg" alt="info" width={16} height={16} />
         </div>
         <h2 className="text-textGrayLight font-bold">OpenAI</h2>
         <span className="text-textGray text-sm">20K posts</span>
@@ -55,7 +55,7 @@ const PopularTags = () => {
       <div className="">
         <div className="flex items-center justify-between">
           <span className="text-textGray text-sm">Technology • Trending</span>
-          <Image src="icons/infoMore.svg" alt="info" width={16} height={16} />
+          <Image src="/icons/infoMore.svg" alt="info" width={16} height={16} />
         </div>
         <h2 className="text-textGrayLight font-bold">OpenAI</h2>
         <span className="text-textGray text-sm">20K posts</span>

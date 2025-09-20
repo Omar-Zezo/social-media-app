@@ -1,9 +1,17 @@
 import { leftbarList } from "@/constants";
+import { prisma } from "@/utils/db";
+import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const LeftBar = () => {
+const LeftBar = async () => {
+  const { userId } = await auth();
+  const user = userId
+    ? await prisma.user.findUnique({ where: { id: userId } })
+    : undefined;
+
+  console.log(user);
   return (
     <div className="h-screen sticky top-0 flex flex-col justify-between pt-2 pb-8">
       <div className="flex flex-col gap-4 items-center 2xl:items-start text-lg">
@@ -14,7 +22,9 @@ const LeftBar = () => {
           {leftbarList.map((item) => (
             <li key={item.id}>
               <Link
-                href={item.link}
+                href={
+                  item.name === "Profile" ? `/${user?.username}` : item.link
+                }
                 className="flex gap-4 px-3 py-2 rounded-full hover:bg-[#181818]"
               >
                 <Image
@@ -50,8 +60,8 @@ const LeftBar = () => {
             />
           </div>
           <div className="hidden 2xl:flex flex-col">
-            <p className="capitalize font-semibold">omar abd elaziz</p>
-            <p className="text-sm text-textGray">@omarabdelaziz</p>
+            <p className="capitalize font-semibold">{user?.displayName}</p>
+            <p className="text-sm text-textGray">@{user?.username}</p>
           </div>
         </div>
         <div className="hidden 2xl:block cursor-pointer font-bold">...</div>

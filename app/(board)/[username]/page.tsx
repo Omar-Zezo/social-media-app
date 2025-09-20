@@ -1,4 +1,5 @@
 import Feed from "@/components/Feed";
+import FollowButton from "@/components/FollowButton";
 import { prisma } from "@/utils/db";
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
@@ -6,11 +7,18 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 const UserPage = async ({ params }: { params: { username: string } }) => {
-  const { username } = params;
   const { userId } = await auth();
-  const user = await prisma.user.findUnique({ where: { username } });
+  const { username } = params;
+  const user = await prisma.user.findUnique({
+    where: { username },
+    include: {
+      _count: { select: { followers: true, followings: true } },
+      followings: userId ? { where: { followerId: userId } } : undefined,
+    },
+  });
 
   if (!user) return notFound();
+
   return (
     <div className="">
       {/* PROFILE TITLE */}
@@ -18,7 +26,9 @@ const UserPage = async ({ params }: { params: { username: string } }) => {
         <Link href="/">
           <Image src="/icons/back.svg" alt="back" width={24} height={24} />
         </Link>
-        <h1 className="font-bold text-lg capitalize">omar abd elaziz</h1>
+        {user.displayName && (
+          <h1 className="font-bold text-lg capitalize">{user.displayName}</h1>
+        )}
       </div>
       {/* INFO */}
       <div className="">
@@ -26,11 +36,15 @@ const UserPage = async ({ params }: { params: { username: string } }) => {
         <div className="relative w-full">
           {/* COVER */}
           <div className="w-full aspect-[3/1] relative">
-            <Image src="/general/cover.jpg" alt="" fill />
+            <Image src={user.cover || "/general/cover.jpg"} alt="" fill />
           </div>
           {/* AVATAR */}
           <div className="w-1/5 aspect-square rounded-full overflow-hidden border-4 border-black bg-gray-300 absolute left-4 -translate-y-1/2">
-            <Image src="/general/avatar.webp" alt="" fill />
+            <Image
+              src={user.img || "/general/avatar.webp"}
+              alt={user.username}
+              fill
+            />
           </div>
         </div>
         <div className="flex w-full items-center justify-end gap-2 p-2">
@@ -43,18 +57,25 @@ const UserPage = async ({ params }: { params: { username: string } }) => {
           <div className="w-9 h-9 flex items-center justify-center rounded-full border-[1px] border-gray-500 cursor-pointer">
             <Image src="/icons/message.svg" alt="more" width={20} height={20} />
           </div>
-          <button className="py-2 px-4 bg-white text-black font-bold rounded-full">
-            Follow
-          </button>
+          {userId && (
+            <FollowButton
+              isFollowing={!!user.followings.length}
+              userId={user.id}
+            />
+          )}
         </div>
         {/* USER DETAILS */}
         <div className="p-4 flex flex-col gap-2">
           {/* USERNAME & HANDLE */}
           <div className="">
-            <h1 className="text-2xl font-bold capitalize">omar abd elaziz</h1>
-            <span className="text-textGray text-sm">@omarabdelaziz</span>
+            {user.displayName && (
+              <h1 className="text-2xl font-bold capitalize">
+                {user.displayName}
+              </h1>
+            )}
+            <span className="text-textGray text-sm">@{user.username}</span>
           </div>
-          <p>Omar Abd Elaziz Web Developer</p>
+          {user.bio && <p>{user.bio}</p>}
           {/* JOB & LOCATION & DATE */}
           <div className="flex gap-4 text-textGray text-[15px]">
             <div className="flex items-center gap-2">
@@ -64,21 +85,27 @@ const UserPage = async ({ params }: { params: { username: string } }) => {
                 width={20}
                 height={20}
               />
-              <span>Egypt</span>
+              {user.location && <span>{user.location}</span>}
             </div>
             <div className="flex items-center gap-2">
               <Image src="/icons/date.svg" alt="date" width={20} height={20} />
-              <span>Joined May 2012</span>
+              <span>
+                Joined{" "}
+                {user.createdAt.toLocaleString("en-US", {
+                  month: "short",
+                  year: "numeric",
+                })}
+              </span>
             </div>
           </div>
           {/* FOLLOWINGS & FOLLOWERS */}
           <div className="flex gap-4">
             <div className="flex items-center gap-2">
-              <span className="font-bold">1080</span>
+              <span className="font-bold">{user._count.followers}</span>
               <span className="text-textGray text-[15px]">Followers</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="font-bold">100</span>
+              <span className="font-bold">{user._count.followings}</span>
               <span className="text-textGray text-[15px]">Followings</span>
             </div>
           </div>

@@ -60,16 +60,23 @@ const SignUpPage = () => {
             </Clerk.Connection>
             <div className="flex flex-col gap-4">
               Sign up with Credentials
+              <Clerk.Field name="username" className="flex flex-col gap-2">
+                <Clerk.Input
+                  className="py-2 px-6 rounded-full border border-borderGray text-white  w-72 placeholder:text-sm placeholder:text-textGray"
+                  placeholder="Username"
+                />
+                <Clerk.FieldError className="text-red-300 text-sm" />
+              </Clerk.Field>
               <Clerk.Field name="emailAddress" className="flex flex-col gap-2">
                 <Clerk.Input
-                  className="py-2 px-6 border border-borderGray placeholder:text-textGray rounded-full text-white w-72 placeholder:text-sm"
+                  className="py-2 px-6 rounded-full border border-borderGray text-white  w-72 placeholder:text-sm placeholder:text-textGray"
                   placeholder="E-mail"
                 />
                 <Clerk.FieldError className="text-red-300 text-sm" />
               </Clerk.Field>
               <Clerk.Field name="password" className="flex flex-col gap-2">
                 <Clerk.Input
-                  className="py-2 px-6 border border-borderGray placeholder:text-textGray rounded-full text-white w-72 placeholder:text-sm"
+                  className="py-2 px-6 rounded-full border border-borderGray text-white  w-72 placeholder:text-sm placeholder:text-textGray"
                   placeholder="Password"
                 />
                 <Clerk.FieldError className="text-red-300 text-sm" />
@@ -83,25 +90,41 @@ const SignUpPage = () => {
               </SignUp.Action>
             </div>
           </SignUp.Step>
+          {/* <SignUp.Step name="continue" className="flex flex-col gap-4">
+            <Clerk.Field name="username">
+              <Clerk.Input
+                placeholder="username"
+                className="py-2 px-6 rounded-full border border-borderGray text-white  w-72 placeholder:text-sm placeholder:text-textGray"
+              />
+              <Clerk.FieldError className="text-red-300 text-sm" />
+            </Clerk.Field>
+
+            <SignUp.Action
+              submit
+              className="w-72 text-center text-iconBlue underline"
+            >
+              Continue
+            </SignUp.Action>
+          </SignUp.Step> */}
           <SignUp.Step name="verifications">
             <SignUp.Strategy name="email_code">
               <h1 className="text-sm mb-2">Check your e-mail</h1>
               <Clerk.Field name="code" className="flex flex-col gap-4">
                 <Clerk.Input
                   placeholder="Verification code"
-                  className="py-2 px-6 border border-borderGray rounded-full text-white w-72 placeholder:text-sm placeholder:text-textGray"
+                  className="py-2 px-6 rounded-full border border-borderGray text-white  w-72 placeholder:text-sm placeholder:text-textGray"
                 />
                 <Clerk.FieldError className="text-red-300 text-sm" />
               </Clerk.Field>
               <SignUp.Action
                 submit
-                className="mt-2 underline text-iconBlue text-sm cursor-pointer"
+                className="mt-2 underline text-iconBlue text-sm"
               >
                 Verify
               </SignUp.Action>
             </SignUp.Strategy>
           </SignUp.Step>
-          {/* OR SIGN UP */}
+          {/* OR SIGN IN */}
           <div className="w-72 flex items-center gap-4">
             <div className="h-px bg-borderGray flex-grow"></div>
             <span className="text-textGrayLight">or</span>

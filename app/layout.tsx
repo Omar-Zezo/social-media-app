@@ -4,6 +4,7 @@ import "./globals.css";
 import LeftBar from "@/components/LeftBar";
 import RightBar from "@/components/RightBar";
 import { ClerkProvider } from "@clerk/nextjs";
+import QueryProvider from "@/providers/QueryProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,13 +30,15 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          {children}
-        </body>
-      </html>
+      <QueryProvider>
+        <html lang="en">
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          >
+            {children}
+          </body>
+        </html>
+      </QueryProvider>
     </ClerkProvider>
   );
 }

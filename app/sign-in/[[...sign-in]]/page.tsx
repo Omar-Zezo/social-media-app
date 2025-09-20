@@ -62,7 +62,7 @@ const SignInPage = () => {
             <Clerk.Field name="identifier" className="flex flex-col gap-2">
               <Clerk.Input
                 placeholder="john@gmail.com"
-                className="py-2 px-6 rounded-full border border-borderGray text-white w-72 placeholder:text-sm placeholder:text-textGray"
+                className="py-2 px-6 rounded-full text-black w-72 placeholder:text-sm"
               />
               <Clerk.FieldError className="text-red-300 text-sm" />
             </Clerk.Field>
@@ -78,7 +78,7 @@ const SignInPage = () => {
               <Clerk.Field name="password" className="flex flex-col gap-2">
                 <Clerk.Input
                   placeholder="password"
-                  className="py-2 px-6 border border-borderGray text-white rounded-full w-72 placeholder:text-sm placeholder:text-textGray"
+                  className="py-2 px-6 rounded-full text-black w-72 placeholder:text-sm"
                 />
                 <Clerk.FieldError className="text-red-300 text-sm" />
               </Clerk.Field>
